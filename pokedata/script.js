@@ -2,12 +2,24 @@ function getRandomNumberForPokeAPI() {
     return Math.floor(Math.random() * 900)
 }
 
+/*
+// using promises
 function getPokemonData() {
     const POKEAPI = "https://pokeapi.co/api/v2/pokemon/";
     let fetchPromise = fetch(POKEAPI + getRandomNumberForPokeAPI())
     .then(body => { return body.json()});
 
     return fetchPromise;
+}
+*/
+
+async function getPokemonData() {
+    // using await
+    const POKEAPI = "https://pokeapi.co/api/v2/pokemon/";
+    let response = await fetch(POKEAPI + getRandomNumberForPokeAPI());
+    let data = await response.json();
+
+    return data;
 }
 
 /*
@@ -63,7 +75,6 @@ document.getElementById("button").addEventListener("click", () => {
     for (let i=0; i <5; i++) {
         let promise = getPokemonData()
         .then(data => {
-            throw new Error("oops");
             return data.name
         });
         
